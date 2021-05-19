@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { Route, Switch } from "react-router-dom";
+import DisplayAllMovies from "./components/DisplayAllMovies";
 import SearchBar from "./components/SearchBar";
 
 
@@ -15,21 +16,25 @@ function App() {
 
   const search = (e) => {
     e.preventDefault();
-    axios(api + '&s=' + state.s).then((data) => {
-      console.log(data)
-    })  
-  }
+    axios(api + '&s=' + state.searchInput).then((data) => {
+      console.log(data.data.Search)
+      let movieResults = data.data.Search;
+
+      setState(prevState => {
+        return {...prevState, results: movieResults}
+      });
+    });  
+  };
 
   const setSearchInput = (e) => {
     let searchInput = e.target.value;
 
     setState(prevState => {
-      console.log(state)
       return {...prevState, searchInput: searchInput}
     })
-  }
-  return (
+  };
 
+  return (
     <div>
       <header>
         <h1>Movie Directory</h1>
@@ -38,6 +43,7 @@ function App() {
         <Switch>
           <Route exact path='/'>
             <SearchBar setSearchInput={setSearchInput} search={search} />
+            <DisplayAllMovies results={state.results}/>
           </Route>
         </Switch>
       </main>
