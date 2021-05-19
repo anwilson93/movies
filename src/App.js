@@ -1,12 +1,12 @@
 import { Route, Switch } from "react-router-dom";
+import SearchBar from "./components/SearchBar";
 
 function App() {
   return (
-    // <div>
-    //   <header>
-    //     <h1>Movie Directory</h1>
-    //   </header>
-    // </div>
+
+    //need to search for movies (search bar)
+    //display movies after search (all movies display)
+    //single movie view (one movie display)
     
     <Switch>
       <Route exact path='/'>
@@ -14,6 +14,7 @@ function App() {
           <header>
             <h1>Movie Directory</h1>
           </header>
+          <SearchBar />
         </div>
       </Route>
     </Switch>
