@@ -1,16 +1,20 @@
+import OneMovieCard from '../OneMovieCard/index';
 import './DisplayAllMovies.css';
-import OneMovieCard from "../OneMovieCard/index"
 
 function DisplayAllMovies ({results, openModal}){
     return (
         <>
             <div className='all-results-container'>
                 {results && results.map(result => {
-                    return <OneMovieCard result={result} key={result.imdbID} openModal={openModal}/>
+                    let resultWithPoster;
+                    if (result.Poster){
+                        resultWithPoster = result;
+                    }
+                    return <OneMovieCard resultWithPoster={resultWithPoster} key={resultWithPoster.imdbID} openModal={openModal}/>
                 })}
             </div>
         </>
     );
-}
+};
 
 export default DisplayAllMovies;

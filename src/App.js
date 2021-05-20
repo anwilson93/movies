@@ -1,14 +1,12 @@
-import axios from "axios";
-import { useState } from "react";
-import { Route, Switch } from "react-router-dom";
-import DisplayAllMovies from "./components/DisplayAllMovies";
-import DisplaySingleMovie from "./components/DisplaySingleMovie";
-import SearchBar from "./components/SearchBar";
-import Carousel from "./components/Carousel";
-import {useEffect} from 'react';
-import wordsAssociatedWithPopularMovies from './Words';
+import axios from 'axios';
+import { useState, useEffect } from 'react';
+import { Route, Switch } from 'react-router-dom';
 
-// error handling, duplicate movies, menu or navigation
+import DisplayAllMovies from './components/DisplayAllMovies';
+import DisplaySingleMovie from './components/DisplaySingleMovie';
+import SearchBar from './components/SearchBar';
+import Carousel from './components/Carousel';
+import wordsAssociatedWithPopularMovies from './Words';
 
 function App() {
   const api = 'http://www.omdbapi.com/?i=tt3896198&apikey=3ccdfc68';
@@ -17,6 +15,7 @@ function App() {
     searchInput: '',
     results: [],
     carouselResults: [],
+    errors: [],
     selected: {}
   });
 
@@ -43,7 +42,6 @@ function App() {
   useEffect (() => {
     let randomIndex = Math.floor(Math.random() * (20 + 1));
     let randomWordForSearch = wordsAssociatedWithPopularMovies[randomIndex];
-    console.log(randomWordForSearch, 'here')
     homePageSearch(randomWordForSearch);
   }, []);
 
@@ -53,6 +51,16 @@ function App() {
   
     axios(api + '&s=' + searchTerm).then((data) => {
       let movieResults = data.data.Search;
+  
+      if (data.data.Error){
+        setState(prevState => {
+          return {...prevState, errors: [data.data.Error]}
+        });
+      } else {
+        setState(prevState => {
+          return {...prevState, errors: []}
+        });
+      }
 
       setState(prevState => {
         return {...prevState, results: movieResults, carouselResults: []}
@@ -62,8 +70,8 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    search(state.searchInput)
-  }
+    search(state.searchInput);
+  };
 
   const setSearchInput = (e) => {
     let searchInput = e.target.value;
@@ -76,7 +84,7 @@ function App() {
 
   //MODAL (SINGLE MOVIE PAGE) OPEN/CLOSE
   const openModal= title => {
-    axios(api + "&t=" + title).then((data) => {
+    axios(api + '&t=' + title).then((data) => {
       let singleMovie = data.data
 
       setState(prevState => {
@@ -91,18 +99,16 @@ function App() {
     })
   };
 
-  console.log(state.carouselResults.length, 'current state here')
-
   return (
     <div>
       <header>
         <h1>Movie Directory</h1>
       </header>
       <main>
-        {(state.carouselResults.length > 0) ? <Carousel carouselResults={state.carouselResults} /> : false}
+        {(state.carouselResults.length > 0) ? <Carousel carouselResults={state.carouselResults} openModal={openModal}/> : false}
         <Switch>
           <Route exact path='/'>
-            <SearchBar setSearchInput={setSearchInput} handleSubmit={handleSubmit} />
+            <SearchBar setSearchInput={setSearchInput} handleSubmit={handleSubmit} errors={state.errors}/>
             <DisplayAllMovies results={state.results} openModal={openModal} state={state} closeModal={closeModal}/>
           </Route>
         </Switch>

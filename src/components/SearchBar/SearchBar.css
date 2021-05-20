@@ -6,6 +6,7 @@
   margin: auto;
   font-size: 22px;
   border-radius: 6px;
+  margin-top: 3%;
 }
 
 #search-box-input:focus {
@@ -18,4 +19,13 @@
   text-align: center;
   width: 90%;
   margin: auto;
+}
+
+#errors {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 3%;
+  font-size: 24px;
 }

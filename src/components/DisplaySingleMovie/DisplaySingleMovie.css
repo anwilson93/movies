@@ -57,7 +57,7 @@ h3 {
   padding: 6%;
 }
 
-.close-modal-button {
+.general-button {
   padding: 12px 30px;
   font-size: 16px;
   font-weight: 700;
@@ -68,6 +68,6 @@ h3 {
   transition: 0.3s;
 }
 
-.close-modal-button:hover {
+.general-button:hover {
   background: white;
 }
