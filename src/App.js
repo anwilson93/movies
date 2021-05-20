@@ -2,11 +2,22 @@ import axios from "axios";
 import { useState } from "react";
 import { Route, Switch } from "react-router-dom";
 import DisplayAllMovies from "./components/DisplayAllMovies";
+import DisplaySingleMovie from "./components/DisplaySingleMovie";
 import SearchBar from "./components/SearchBar";
+import {useEffect} from 'react';
 
 
 function App() {
   const api = 'http://www.omdbapi.com/?i=tt3896198&apikey=3ccdfc68';
+
+  // Create arr so that movies will appear on home page upon load. testing if it works
+  let wordsAssociatedWithPopularMovies = [
+    'Lion',
+    'Wind',
+    'Star',
+    'Wars'
+  ]
+
 
   const [state, setState] = useState({
     searchInput: '',
@@ -14,10 +25,9 @@ function App() {
     selected: {}
   });
 
-  const search = (e) => {
-    e.preventDefault();
-    axios(api + '&s=' + state.searchInput).then((data) => {
-      console.log(data.data.Search)
+  const search = (searchTerm) => {
+  
+    axios(api + '&s=' + searchTerm).then((data) => {
       let movieResults = data.data.Search;
 
       setState(prevState => {
@@ -25,6 +35,18 @@ function App() {
       });
     });  
   };
+
+  useEffect (() => {
+      let randomIndex = Math.floor(Math.random() * (3 + 1));
+      console.log(randomIndex, 'here')
+      let randomWordForSearch = wordsAssociatedWithPopularMovies[randomIndex];
+      search(randomWordForSearch);
+  }, []);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    search(state.searchInput)
+  }
 
   const setSearchInput = (e) => {
     let searchInput = e.target.value;
@@ -34,6 +56,24 @@ function App() {
     })
   };
 
+  const openModal= title => {
+    axios(api + "&t=" + title).then((data) => {
+      let singleMovie = data.data
+
+      setState(prevState => {
+        return {...prevState, selected: singleMovie}
+      })
+    })
+  };
+
+  const closeModal = () => {
+    setState(prevState => {
+      return {...prevState, selected: {}}
+    })
+  };
+
+  console.log(state.selected.Title === undefined, 'selected state here')
+
   return (
     <div>
       <header>
@@ -42,17 +82,13 @@ function App() {
       <main>
         <Switch>
           <Route exact path='/'>
-            <SearchBar setSearchInput={setSearchInput} search={search} />
-            <DisplayAllMovies results={state.results}/>
+            <SearchBar setSearchInput={setSearchInput} handleSubmit={handleSubmit} />
+            <DisplayAllMovies results={state.results} openModal={openModal} state={state} closeModal={closeModal}/>
           </Route>
         </Switch>
+        {(typeof state.selected.Title !== 'undefined') ? <DisplaySingleMovie selected={state.selected} closeModal={closeModal} /> : false}
       </main>
     </div>
-
-    //need to search for movies (search bar)
-    //display movies after search (all movies display)
-    //single movie view (one movie display)
-
   );
 }
 

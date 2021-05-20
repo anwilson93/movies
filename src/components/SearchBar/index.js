@@ -1,10 +1,10 @@
 import './SearchBar.css';
 
 
-function SearchBar ({setSearchInput, search}){
+function SearchBar ({setSearchInput, handleSubmit}){
     return (
         <>
-            <form onSubmit={search} id='search-box-form'>
+            <form onSubmit={handleSubmit} id='search-box-form'>
                 <input
                 id='search-box-input'
                 placeholder='Search for a movie here!'
@@ -14,4 +14,4 @@ function SearchBar ({setSearchInput, search}){
     );
 }
 
-export default SearchBar
+export default SearchBar;

@@ -1,0 +1,27 @@
+.movie-title {
+  color: white;
+  font-size: 16px;
+  padding: 10px;
+  /* make text's max width same as img */
+  max-width: 300px;
+  text-align: center;
+}
+
+#poster-img {
+  height: 400px;
+}
+
+.individual-result-container {
+  border: 5px solid black;
+  width: 30%;
+  cursor: pointer;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.individual-result-container:hover {
+  opacity: 0.8;
+  transform: scale(0.95);
+}
