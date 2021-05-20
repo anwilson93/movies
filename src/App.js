@@ -5,19 +5,11 @@ import DisplayAllMovies from "./components/DisplayAllMovies";
 import DisplaySingleMovie from "./components/DisplaySingleMovie";
 import SearchBar from "./components/SearchBar";
 import {useEffect} from 'react';
+import wordsAssociatedWithPopularMovies from './Words';
 
 
 function App() {
   const api = 'http://www.omdbapi.com/?i=tt3896198&apikey=3ccdfc68';
-
-  // Create arr so that movies will appear on home page upon load. testing if it works
-  let wordsAssociatedWithPopularMovies = [
-    'Lion',
-    'Wind',
-    'Star',
-    'Wars'
-  ]
-
 
   const [state, setState] = useState({
     searchInput: '',
@@ -37,9 +29,9 @@ function App() {
   };
 
   useEffect (() => {
-      let randomIndex = Math.floor(Math.random() * (3 + 1));
-      console.log(randomIndex, 'here')
+      let randomIndex = Math.floor(Math.random() * (20 + 1));
       let randomWordForSearch = wordsAssociatedWithPopularMovies[randomIndex];
+      console.log(randomWordForSearch, 'here')
       search(randomWordForSearch);
   }, []);
 
