@@ -11,3 +11,8 @@ header {
   text-align: center;
   padding: 3%;
 }
+
+main {
+  max-width: 90%;
+  margin: 0 auto;
+}
