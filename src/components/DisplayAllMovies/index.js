@@ -6,11 +6,7 @@ function DisplayAllMovies ({results, openModal}){
         <>
             <div className='all-results-container'>
                 {results && results.map(result => {
-                    let resultWithPoster;
-                    if (result.Poster){
-                        resultWithPoster = result;
-                    }
-                    return <OneMovieCard resultWithPoster={resultWithPoster} key={resultWithPoster.imdbID} openModal={openModal}/>
+                    return <OneMovieCard result={result} key={result.imdbID} openModal={openModal}/>
                 })}
             </div>
         </>
