@@ -4,6 +4,7 @@ import { Route, Switch } from "react-router-dom";
 import DisplayAllMovies from "./components/DisplayAllMovies";
 import DisplaySingleMovie from "./components/DisplaySingleMovie";
 import SearchBar from "./components/SearchBar";
+import Carousel from "./components/Carousel";
 import {useEffect} from 'react';
 import wordsAssociatedWithPopularMovies from './Words';
 
@@ -19,6 +20,7 @@ function App() {
     selected: {}
   });
 
+  //INIT RANDOM SEARCH FOR HOME PAGE AND CAROUSEL
   const homePageSearch = (searchTerm) => {
     axios(api + '&s=' + searchTerm).then((data) => {
       let res = data.data.Search;
@@ -31,32 +33,32 @@ function App() {
           movieResults.push(res[i]);
         }
       };
-     
-      console.log(movieResultsCarousel)
 
       setState(prevState => {
-        return {...prevState, results: movieResults}
+        return {...prevState, results: movieResults, carouselResults: movieResultsCarousel}
       });
     });  
   };
 
+  useEffect (() => {
+    let randomIndex = Math.floor(Math.random() * (20 + 1));
+    let randomWordForSearch = wordsAssociatedWithPopularMovies[randomIndex];
+    console.log(randomWordForSearch, 'here')
+    homePageSearch(randomWordForSearch);
+  }, []);
+
+
+  //SUBMITTING INPUT & UPDATING SEARCH FROM FORM
   const search = (searchTerm) => {
   
     axios(api + '&s=' + searchTerm).then((data) => {
       let movieResults = data.data.Search;
 
       setState(prevState => {
-        return {...prevState, results: movieResults}
+        return {...prevState, results: movieResults, carouselResults: []}
       });
     });  
   };
-
-  useEffect (() => {
-      let randomIndex = Math.floor(Math.random() * (20 + 1));
-      let randomWordForSearch = wordsAssociatedWithPopularMovies[randomIndex];
-      console.log(randomWordForSearch, 'here')
-      homePageSearch(randomWordForSearch);
-  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -71,6 +73,8 @@ function App() {
     })
   };
 
+
+  //MODAL (SINGLE MOVIE PAGE) OPEN/CLOSE
   const openModal= title => {
     axios(api + "&t=" + title).then((data) => {
       let singleMovie = data.data
@@ -87,7 +91,7 @@ function App() {
     })
   };
 
-  console.log(state.selected.Title === undefined, 'selected state here')
+  console.log(state.carouselResults.length, 'current state here')
 
   return (
     <div>
@@ -95,6 +99,7 @@ function App() {
         <h1>Movie Directory</h1>
       </header>
       <main>
+        {(state.carouselResults.length > 0) ? <Carousel carouselResults={state.carouselResults} /> : false}
         <Switch>
           <Route exact path='/'>
             <SearchBar setSearchInput={setSearchInput} handleSubmit={handleSubmit} />
