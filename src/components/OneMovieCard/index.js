@@ -1,11 +1,11 @@
 import './OneMovieCard.css';
 
-function OneMovieCard ({resultWithPoster, openModal}){
+function OneMovieCard ({result, openModal}){
     return (
         <>
-            <div className='individual-result-container' onClick={() => openModal(resultWithPoster.Title)}> 
-                <img id='poster-img' src={resultWithPoster.Poster} alt={resultWithPoster.Title + ' Poster'}/>                   
-                <h2 className='movie-title' >{resultWithPoster.Title}</h2>
+            <div className='individual-result-container' onClick={() => openModal(result.Title)}> 
+                <img id='poster-img' src={result.Poster} alt={result.Title + ' Poster'}/>                   
+                <h2 className='movie-title' >{result.Title}</h2>
             </div>
         </>
     );
