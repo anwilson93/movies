@@ -14,10 +14,10 @@ function DisplaySingleMovie ({selected, closeModal}){
                         <span id='movie-rating'>{selected.imdbRating}</span>/10
                     </div>
                     <div className='plot'>
-                        <img src={selected.Poster} />
+                        <img src={selected.Poster} alt={selected.Title + ' Poster'} />
                         <div>{selected.Plot}</div>
                     </div>
-                    <button className='close-modal-button' onClick={closeModal}>X</button>
+                    <button className='general-button' onClick={closeModal}>X</button>
                 </div>
             </div>
         </>

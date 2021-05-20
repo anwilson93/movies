@@ -1,8 +1,9 @@
-import './Carousel.css';
-import SingleCarouselImg from '../SingleCarouselImg';
 import { useState } from 'react';
 
-function Carousel ({carouselResults}){
+import SingleCarouselImg from '../SingleCarouselImg';
+import './Carousel.css';
+
+function Carousel ({carouselResults, openModal}){
     const [centerImg, setCenterImg] = useState(0);
 
     const toggleRight = () => {
@@ -11,7 +12,7 @@ function Carousel ({carouselResults}){
         } else {
             setCenterImg(centerImg + 1)
         }
-    }
+    };
 
     const toggleLeft = () => {
         if (centerImg === 0){
@@ -19,26 +20,27 @@ function Carousel ({carouselResults}){
         } else {
             setCenterImg(centerImg - 1)
         }
-    }
+    };
 
-    console.log(centerImg, 'image index test')
     return (
-        <>
-            <button onClick={toggleLeft}>Left</button>
-            <button onClick={toggleRight}>Right</button>
+        <div id='carousel-outer-div'>
             <div id='carousel-container'>
                 {carouselResults && carouselResults.map((result, index) => {
                     return (
-                        <>
+                        <div key={result.imdbID + index}>
                             {index === centerImg && (
-                                <SingleCarouselImg result={result} key={result.imdbID}/>
+                                <SingleCarouselImg result={result} openModal={openModal}/>
                             )}
-                        </>
+                        </div>
                     )
                 })}
             </div>
-        </>
+            <div id='carousel-buttons-div'>
+                <button className='general-button carousel-button' onClick={toggleLeft}>Left</button>
+                <button className='general-button carousel-button' onClick={toggleRight}>Right</button>
+            </div>
+        </div>
     );
-}
+};
 
 export default Carousel;
