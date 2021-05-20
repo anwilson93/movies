@@ -23,7 +23,7 @@ function Carousel ({carouselResults, openModal}){
     };
 
     return (
-        <div id='carousel-outer-div'>
+        <div id='carousel-outer-div'> Discover new movies below
             <div id='carousel-container'>
                 {carouselResults && carouselResults.map((result, index) => {
                     return (
