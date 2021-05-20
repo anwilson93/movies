@@ -20,7 +20,32 @@
     'Dwarves',
     'Force',
     'Awakens',
-    'Dalmatians'
+    'Dalmatians',
+    'Empire',
+    'Avatar',
+    'Return',
+    'Jurassic',
+    'Park',
+    'Phantom',
+    'Menace',
+    'King',
+    'Raiders',
+    'Ark',
+    'Graduate',
+    'Godfather',
+    'Forrest',
+    'Poppins',
+    'Grease',
+    'Avengers',
+    'Panther',
+    'Knight',
+    'Jungle',
+    'Sleeping',
+    'Beauty',
+    'Shrek',
+    'Spider',
+    'Home',
+    'Alone'
   ]
 
   export default wordsAssociatedWithPopularMovies;

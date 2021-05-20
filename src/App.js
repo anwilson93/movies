@@ -40,7 +40,7 @@ function App() {
   };
 
   useEffect (() => {
-    let randomIndex = Math.floor(Math.random() * (20 + 1));
+    let randomIndex = Math.floor(Math.random() * (44 + 1));
     let randomWordForSearch = wordsAssociatedWithPopularMovies[randomIndex];
     homePageSearch(randomWordForSearch);
   }, []);
