@@ -1,0 +1,23 @@
+#nav {
+  background-color: #131313;
+  margin: 0;
+  height: 60px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+#nav-ele-1 {
+  height: 60px;
+  display: flex;
+  align-items: center;
+}
+
+#nav-ele-2 {
+  width: 70%;
+  height: 60px;
+  display: flex;
+  align-items: center;
+}
