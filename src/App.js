@@ -7,6 +7,7 @@ import SearchBar from "./components/SearchBar";
 import {useEffect} from 'react';
 import wordsAssociatedWithPopularMovies from './Words';
 
+// error handling, duplicate movies, menu or navigation
 
 function App() {
   const api = 'http://www.omdbapi.com/?i=tt3896198&apikey=3ccdfc68';
@@ -14,8 +15,30 @@ function App() {
   const [state, setState] = useState({
     searchInput: '',
     results: [],
+    carouselResults: [],
     selected: {}
   });
+
+  const homePageSearch = (searchTerm) => {
+    axios(api + '&s=' + searchTerm).then((data) => {
+      let res = data.data.Search;
+      let movieResultsCarousel = [];
+      let movieResults = [];
+      for (let i = 0; i < 10; i++){
+        if (i % 2 === 0){
+          movieResultsCarousel.push(res[i]);
+        } else {
+          movieResults.push(res[i]);
+        }
+      };
+     
+      console.log(movieResultsCarousel)
+
+      setState(prevState => {
+        return {...prevState, results: movieResults}
+      });
+    });  
+  };
 
   const search = (searchTerm) => {
   
@@ -32,7 +55,7 @@ function App() {
       let randomIndex = Math.floor(Math.random() * (20 + 1));
       let randomWordForSearch = wordsAssociatedWithPopularMovies[randomIndex];
       console.log(randomWordForSearch, 'here')
-      search(randomWordForSearch);
+      homePageSearch(randomWordForSearch);
   }, []);
 
   const handleSubmit = (e) => {
