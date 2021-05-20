@@ -4,8 +4,8 @@ import { Route, Switch } from 'react-router-dom';
 
 import DisplayAllMovies from './components/DisplayAllMovies';
 import DisplaySingleMovie from './components/DisplaySingleMovie';
-import SearchBar from './components/SearchBar';
 import Carousel from './components/Carousel';
+import Navigation from "./components/Navigation";
 import wordsAssociatedWithPopularMovies from './Words';
 
 function App() {
@@ -45,6 +45,14 @@ function App() {
     homePageSearch(randomWordForSearch);
   }, []);
 
+  const clearSearch = () => {
+    setState(prevState => {
+      return {...prevState, results: [], carouselResults: [], setSearchInput: ''}
+    });
+    let randomIndex = Math.floor(Math.random() * (44 + 1));
+    let randomWordForSearch = wordsAssociatedWithPopularMovies[randomIndex];
+    homePageSearch(randomWordForSearch);
+  };
 
   //SUBMITTING INPUT & UPDATING SEARCH FROM FORM
   const search = (searchTerm) => {
@@ -90,25 +98,22 @@ function App() {
       setState(prevState => {
         return {...prevState, selected: singleMovie}
       })
-    })
+    });
   };
 
   const closeModal = () => {
     setState(prevState => {
       return {...prevState, selected: {}}
-    })
+    });
   };
 
   return (
     <div>
-      <header>
-        <h1>Movie Directory</h1>
-      </header>
+      <Navigation setSearchInput={setSearchInput} handleSubmit={handleSubmit} errors={state.errors} clearSearch={clearSearch}/>
       <main>
         {(state.carouselResults.length > 0) ? <Carousel carouselResults={state.carouselResults} openModal={openModal}/> : false}
         <Switch>
           <Route exact path='/'>
-            <SearchBar setSearchInput={setSearchInput} handleSubmit={handleSubmit} errors={state.errors}/>
             <DisplayAllMovies results={state.results} openModal={openModal} state={state} closeModal={closeModal}/>
           </Route>
         </Switch>

@@ -1,12 +1,11 @@
 #search-box-input {
   border: none;
   outline: none;
-  width: 70%;
+  width: 100%;
   padding: 10px;
   margin: auto;
   font-size: 22px;
   border-radius: 6px;
-  margin-top: 3%;
 }
 
 #search-box-input:focus {
